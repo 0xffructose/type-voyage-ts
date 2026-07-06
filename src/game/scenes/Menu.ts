@@ -1,10 +1,9 @@
 import { Scene } from 'phaser';
 import { SceneKeys } from '../scene-keys';
 import { Button } from '../ui/Button';
+import { mainFontConfig } from '../config';
 
 export class Menu extends Scene {
-
-    fontConfig: any;
 
     constructor() {
         super({
@@ -21,21 +20,19 @@ export class Menu extends Scene {
     create() {
         console.log("MENU SCENE -> CREATE");
 
-        this.fontConfig = { fontFamily: '"Balsamiq Sans", sans-serif', fontSize: '32px', fontWeight: '200' };
-
         const centerX: number = this.scale.width / 2;
         const centerY: number = this.scale.height / 2;
 
-        const title: Phaser.GameObjects.Text  = this.add.text(centerX, centerY - 160, "TYPE VOYAGE", this.fontConfig).setOrigin(0.5); 
+        const title: Phaser.GameObjects.Text  = this.add.text(centerX, centerY - 160, "TYPE VOYAGE", mainFontConfig).setOrigin(0.5); 
         title.setStroke('#000000', 8);
 
-        const singlePlayerButton: Phaser.GameObjects.Text = Button.to(this).position(centerX, centerY - 20).text("Singleplayer").style(this.fontConfig).click(() => {
+        const singlePlayerButton: Phaser.GameObjects.Text = Button.to(this).position(centerX, centerY - 20).text("Singleplayer").style(mainFontConfig).click(() => {
             this.scene.start(SceneKeys.SingleplayerModeScene, { levelId: 1 });
         }).build();
         
         singlePlayerButton.setStroke('#000', 4);
     
-        const multiPlayerButton: Phaser.GameObjects.Text = Button.to(this).position(centerX, centerY + 40).text("Multiplayer").style(this.fontConfig).click(() => {
+        const multiPlayerButton: Phaser.GameObjects.Text = Button.to(this).position(centerX, centerY + 40).text("Multiplayer").style(mainFontConfig).click(() => {
             this.scene.start(SceneKeys.MultiplayerModeScene);
         }).build();
 

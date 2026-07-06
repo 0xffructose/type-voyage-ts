@@ -1,0 +1,1 @@
+export const mainFontConfig: any = { fontFamily: '"Balsamiq Sans", sans-serif', fontSize: '32px', fontWeight: '200' };

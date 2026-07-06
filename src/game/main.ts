@@ -5,6 +5,7 @@ import { Preloader } from './scenes/Preloader';
 import { Menu } from './scenes/Menu';
 import { SingleplayerModeScene } from './scenes/SingleplayerModeScene';
 import { LevelSelectScene } from './scenes/LevelSelectScene';
+import { LevelScene } from './scenes/LevelScene';
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -24,7 +25,8 @@ const config: Phaser.Types.Core.GameConfig = {
         Preloader,
         Menu,
         SingleplayerModeScene,
-        LevelSelectScene
+        LevelSelectScene,
+        LevelScene
     ]
 };
 

@@ -1,6 +1,8 @@
 import { Cameras, GameObjects, Math, Scene } from "phaser";
 import { SceneKeys } from "../scene-keys";
 import { PopUp } from "../ui/PopUp";
+import { Button } from "../ui/Button";
+import { mainFontConfig } from "../config";
 
 export class LevelSelectScene extends Scene {
     
@@ -11,6 +13,7 @@ export class LevelSelectScene extends Scene {
 
     levelPopUp: PopUp;
 
+    selectedLevel: number | null;
 
     constructor() {
         super({
@@ -26,6 +29,7 @@ export class LevelSelectScene extends Scene {
 
     create() {
         this.camera = this.cameras.main; 
+
         this.camera.fadeIn(500, 0, 0, 0);
 
         this.map = this.add.image(0, 0, "world-map").setScale(0.25).setOrigin(0);
@@ -36,7 +40,21 @@ export class LevelSelectScene extends Scene {
         this.camera.scrollX = (this.map.displayWidth - this.camera.width) / 2;
         this.camera.scrollY = (this.map.displayHeight - this.camera.height) / 2;
 
-        this.levelPopUp = PopUp.to(this).size(650, 650);
+        // LEVEL POP UP
+        this.levelPopUp = PopUp.to(this).size(650, 300);
+        const levelPopUpTitle: GameObjects.Text = this.add.text(0, -125, "LEVEL ?", mainFontConfig).setOrigin(0.5);
+
+        const playButton: GameObjects.Text = Button.to(this).position(0, 100).text("PLAY LEVEL").style(mainFontConfig).click(() => {
+            this.scene.start(SceneKeys.LevelScene, { levelNumber: this.selectedLevel });
+        }).build();
+
+        const closeButton: GameObjects.Text = Button.to(this).position(300, -125).text("X").style(mainFontConfig).click(() => {
+            this.levelPopUp.hide(() => {
+                this.selectedLevel = null;
+            });
+        }).build();
+
+        this.levelPopUp.add([levelPopUpTitle, closeButton, playButton]);
 
         const levels: any[] = this.cache.json.get('world-data');
         if (levels && levels.length > 0) {
@@ -77,11 +95,14 @@ export class LevelSelectScene extends Scene {
 
                     levelPoint.on('pointerup', (pointer: any) => {
                         levelPoint.setFillStyle(0xff0000);
+                        this.selectedLevel = level.id;
                         
                         const distance = Math.Distance.Between(pointer.downX, pointer.downY, pointer.x, pointer.y);
                         
                         if (distance < 5)
-                            this.levelPopUp.show();
+                            this.levelPopUp.show(() => {
+                                levelPopUpTitle.setText(`LEVEL ${this.selectedLevel}`);
+                            });
                     });
 
                 }

@@ -1,4 +1,5 @@
 import { GameObjects, Scene } from "phaser";
+import { Button } from "./Button";
 
 export class PopUp {
 
@@ -41,8 +42,16 @@ export class PopUp {
         return this;
     }
 
-    show() {
-        this.popUpContainer.setVisible(true); this.popUpContainer.setScale(0.8);
+    add(element: GameObjects.Text[]): PopUp {
+        this.popUpContainer.add(element);
+        return this;
+    }
+
+    show(action?: Function) {
+        action?.();
+
+        this.popUpContainer.setVisible(true); 
+        this.popUpContainer.setScale(0.8);
         this.popUpContainer.setAlpha(0);
         
         this.scene.tweens.add({
@@ -54,8 +63,18 @@ export class PopUp {
         });
     }
 
-    hide() {
-        this.popUpContainer.setVisible(false);
+    hide(action?: Function) {
+        this.scene.tweens.add({
+            targets: this.popUpContainer,
+            scale: 0.8,
+            alpha: 0,
+            duration: 200,
+            ease: 'Back.easeIn',
+            onComplete: () => {
+                this.popUpContainer.setVisible(false);
+                action?.();
+            }
+        });
     }
 
     getPopUpContainer() {

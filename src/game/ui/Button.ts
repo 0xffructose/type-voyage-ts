@@ -9,6 +9,7 @@ export class Button {
     private textStyle: GameObjects.TextStyle;
 
     private func: Function;
+    private textContent: GameObjects.Text;
 
     constructor(scene: Scene) {
         this.scene = scene;
@@ -39,9 +40,9 @@ export class Button {
     }
 
     build() {
-        let text: Phaser.GameObjects.Text = this.scene.add.text(this.x, this.y, this.content, this.textStyle).setOrigin(0.5).once('pointerup', this.func);
-        text.setInteractive({ useHandCursor: true });
-        return text;
+        this.textContent = this.scene.add.text(this.x, this.y, this.content, this.textStyle).setOrigin(0.5).on('pointerup', this.func);
+        this.textContent.setInteractive({ useHandCursor: true });
+        return this.textContent;
     }
 
 }

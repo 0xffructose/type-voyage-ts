@@ -5,4 +5,5 @@ export enum SceneKeys {
     SingleplayerModeScene = "SINGLEPLAYER_MODE_SCENE",
     MultiplayerModeScene = "MULTIPLAYER_MODE_SCENE",
     LevelSelectScene = "LEVEL_SELECT_SCENE",
+    LevelScene = "LEVEL_SCENE",
 }
